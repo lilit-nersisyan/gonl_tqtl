@@ -128,12 +128,22 @@ sf = summary(best.fit)
 
 plot(predict.lm(best.fit), sf$residuals)
 abline(h = 0)
+fit = lm(child.df$MTL ~ predict.lm(best.fit))
+sf = summary(fit)
+
 plot(child.df$MTL, predict.lm(best.fit), 
      xlim = c(3500, 12000), ylim  = c(3500, 12000),
-     xlab = "child MTL", ylab = "Predicted MTL", 
+     xlab = "Child MTL", ylab = "Predicted MTL", 
+     pch = 19, col = "slategray4", cex= 1.5,
      main = "Best fit model: MTL ~ Age + mMTL + fMTL + MAC + PAC")
-summary(lm(child.df$MTL ~ predict.lm(best.fit)))
 
+abline(fit$coefficients[1:2], col = "plum4", lwd = 3) 
+
+legend(x = "topleft", cex = 1.5,
+       legend = c(paste0("Adjusted R2 = ", round(sf$adj.r.squared, 2)), 
+                  paste0("p value < 2.2e-16"), 
+                  "mMTL*** fMTL*** MAC** Age*"),
+       bty = "n")
 
 
 
