@@ -24,20 +24,21 @@ load("total.df.RData") # phenotype data of all individuals
 
 fit = lm(total.df$MTL/1000 ~ total.df$Age + total.df$Sex)
 sf = summary(fit)
+sex.color = c("M"="deepskyblue4", "F" = "lightpink3")
 
 par(mar = c(5.1, 5.1, 4.1, 2))
 plot(total.df$Age, total.df$MTL/1000, cex.axis = 2,
-     pch = 19, col = "slategray4", 
+     pch = 19, col = sex.color[total.df$Sex], 
      xlab = "Age, years", ylab = "MTL, kbp", cex.lab = 2, 
      main = "MTL is negatively correlated with age", cex.main = 2)
-abline(fit$coefficients[1:2], col = "indianred4", lwd = 3) 
+abline(fit$coefficients[1:2], col = "gray17", lwd = 2) 
 
 legend(x = 65, y = 12, cex = 1.5,
        legend = c(paste0("Adjusted R2 = ", round(sf$adj.r.squared, 2)), 
                   paste0("p value < 2.2e-16")),
        bty = "n")
 
-
+legend(x = 20, y = 4, col = sex.color, legend = c("Male", "Female"), pch = 16, cex = 1)
 
 ###########################################
 ###           MTL sex difference        ###
